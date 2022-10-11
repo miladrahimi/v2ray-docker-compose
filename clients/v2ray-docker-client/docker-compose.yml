@@ -10,5 +10,5 @@ services:
       - 127.0.0.1:${SOCKS_PORT:-1010}:1010
       - 127.0.0.1:${HTTP_PORT:-1110}:1110
     volumes:
-      - ./configs/:/etc/v2ray/
+      - ./config/:/etc/v2ray/
       - ./logs:/var/log/v2ray/
