@@ -10,8 +10,14 @@
       "port": 1010,
       "protocol": "socks",
       "settings": {
-        "auth": "noauth",
-        "udp": true
+        "auth": "password",
+        "udp": true,
+        "accounts": [
+            {
+                "user": "<SOCKS-USERNAME>",
+                "pass": "<SOCKS-PASSWORD>"
+            }
+        ]
       }
     },
     {

@@ -43,6 +43,8 @@ To setup the bridge server:
 1. Copy the "v2ray-bridge-server" directory into the bridge server.
 2. Replace the following variables in the `config.json` file with appropriate values.
     * `<SHADOWSOCKS-PASSWORD>`: A password for Shadowsocks users like `!FR33DoM!`.
+    * `<SOCKS-USERNAME>`: A username for SOCKS5 proxy like `myuser`.
+    * `<SOCKS-PASSWORD>`: A password for SOCKS5 proxy `!FR33DoM!`.
     * `<BRIDGE-UUID>`: The generated UUID for the bridge server.
     * `<UPSTREAM-IP>`: The upstream server IP address like `13.13.13.13`.
     * `<UPSTREAM-UUID>`: The used UUID for the upstream server.
