@@ -9,6 +9,10 @@
       "listen": "0.0.0.0",
       "port": 1010,
       "protocol": "socks",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      },
       "settings": {
         "auth": "noauth",
         "udp": true
@@ -18,10 +22,14 @@
       "listen": "0.0.0.0",
       "port": 1110,
       "protocol": "http",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": ["http", "tls"]
+      },
       "settings": {}
     }
   ],
-  "outbound": [
+  "outbounds": [
     {
       "tag": "proxy",
       "protocol": "vmess",
@@ -76,6 +84,13 @@
           "ip": [
             "geoip:private",
             "geoip:ir"
+          ]
+        },
+        {
+          "type": "field",
+          "outboundTag": "freedom",
+          "protocol": [
+            "bittorrent"
           ]
         }
       ]

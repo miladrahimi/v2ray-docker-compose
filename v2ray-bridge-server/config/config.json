@@ -9,6 +9,13 @@
       "listen": "0.0.0.0",
       "port": 1010,
       "protocol": "socks",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      },
       "settings": {
         "auth": "noauth",
         "udp": true
@@ -18,12 +25,26 @@
       "listen": "0.0.0.0",
       "port": 1110,
       "protocol": "http",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      },
       "settings": {}
     },
     {
       "listen": "0.0.0.0",
       "port": 1210,
       "protocol": "shadowsocks",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      },
       "settings": {
         "password": "<SHADOWSOCKS-PASSWORD>",
         "method": "aes-128-gcm",
@@ -35,6 +56,13 @@
       "listen": "0.0.0.0",
       "port": 1310,
       "protocol": "vmess",
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      },
       "settings": {
         "clients": [
           {
@@ -104,6 +132,13 @@
           "outboundTag": "blackhole",
           "ip": [
             "geoip:private"
+          ]
+        },
+        {
+          "type": "field",
+          "outboundTag": "blackhole",
+          "protocol": [
+            "bittorrent"
           ]
         }
       ]
