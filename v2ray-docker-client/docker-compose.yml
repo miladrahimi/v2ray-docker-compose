@@ -3,8 +3,9 @@ version: "3"
 services:
   v2ray:
     image: ghcr.io/getimages/v2fly-core:v4.45.2
-    container_name: v2ray_client
     restart: always
+    environment:
+      - v2ray.vmess.aead.forced=false
     ports:
       - 127.0.0.1:${SOCKS_PORT:-1010}:1010
       - 127.0.0.1:${SOCKS_PORT:-1010}:1010/udp
