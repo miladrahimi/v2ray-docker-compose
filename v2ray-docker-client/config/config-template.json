@@ -1,0 +1,224 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "1081",
+      "port": 1081,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": false
+      }
+    },
+    {
+      "tag": "1082",
+      "port": 1082,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": false
+      }
+    },
+    {
+      "tag": "1083",
+      "port": 1083,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": false
+      }
+    },
+    {
+      "tag": "http",
+      "port": 8118,
+      "protocol": "http",
+      "settings": {}
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "vmess-ws",
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "<BRIDGE-DOMAIN-OR-IP>",
+            "port": 80,
+            "users": [
+              {
+                "id": "<UUID>",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "connectionReuse": true,
+          "path": "/discussion/",
+          "headers": {
+            "Host": "ninisite.com"
+          }
+        }
+      },
+      "mux": {
+        "enabled": true
+      }
+    },
+    {
+      "tag": "shadowsocks-ws",
+      "protocol": "shadowsocks",
+      "settings": {
+        "servers": [
+          {
+            "address": "<BRIDGE-DOMAIN-OR-IP>",
+            "port": 80,
+            "method": "aes-128-gcm",
+            "password": "<SHADOWSOCKS_PASSWORD>"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "connectionReuse": true,
+          "path": "/topics/sounds/mazhabi/",
+          "headers": {
+            "Host": "download.ir"
+          }
+        }
+      },
+      "mux": {
+        "enabled": true
+      }
+    },
+    {
+      "tag": "vless-ws",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "<BRIDGE-DOMAIN-OR-IP>",
+            "port": 1355,
+            "users": [
+              {
+                "id": "<UUID>",
+                "encryption": "none",
+                "level": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "connectionReuse": true,
+          "path": "/Play/",
+          "headers": {
+            "Host": "sound.tebyan.net"
+          }
+        }
+      },
+      "mux": {
+        "enabled": true
+      }
+    },
+    {
+      "tag": "vless-tls",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "<BRIDGE-DOMAIN-OR-IP>",
+            "port": 443,
+            "users": [
+              {
+                "id": "<UUID>",
+                "level": 0,
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "www.varzesh3.com",
+          "allowInsecure": true
+        }
+      },
+      "mux": {
+        "enabled": true
+      }
+    },
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "direct"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "rules": [
+        {
+          "type": "field",
+          "outboundTag": "vmess-ws",
+          "inboundTag": [
+            "1081"
+          ]
+        },
+        {
+          "type": "field",
+          "outboundTag": "shadowsocks-ws",
+          "inboundTag": [
+            "1082"
+          ]
+        },
+        {
+          "type": "field",
+          "outboundTag": "vless-ws",
+          "inboundTag": [
+            "1083"
+          ]
+        },
+        {
+          "type": "field",
+          "outboundTag": "vmess-ws",
+          "inboundTag": [
+            "http"
+          ]
+        },
+        {
+          "type": "field",
+          "outboundTag": "direct",
+          "domain": [
+            "regexp:.*\\.ir$"
+          ]
+        },
+        {
+          "type": "field",
+          "outboundTag": "direct",
+          "ip": [
+            "geoip:private",
+            "geoip:ir"
+          ]
+        },
+        {
+          "type": "field",
+          "outboundTag": "direct",
+          "protocol": [
+            "bittorrent"
+          ]
+        }
+      ]
+    }
+  }
+}

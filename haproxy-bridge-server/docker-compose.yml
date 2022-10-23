@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  haproxy:
+    image: haproxy:lts-bullseye
+    container_name: haproxy_bridge
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - 6543:6543  # stats page 
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ./certificate.pem:/usr/local/etc/certificate.pem:ro

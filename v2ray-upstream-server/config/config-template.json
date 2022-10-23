@@ -1,0 +1,132 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "vmess-ws",
+      "port": 80,
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "<UUID>",
+            "alterId": 0,
+            "username": "DefaultUser"
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/discussion/",
+          "headers": {
+            "Host": "ninisite.com"
+          }
+        }
+      }
+    },
+    {
+      "tag": "shadowsocks-ws",
+      "port": 100,
+      "protocol": "shadowsocks",
+      "settings": {
+        "method": "aes-128-gcm",
+        "ota": true,
+        "password": "<SHADOWSOCKS_PASSWORD>"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/topics/sounds/mazhabi/",
+          "headers": {
+            "Host": "download.ir"
+          }
+        }
+      }
+    },
+    {
+      "tag": "vless-ws",
+      "port": 1355,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "<UUID>",
+            "level": 0,
+            "username": "DefaultUser"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "connectionReuse": true,
+          "path": "/Play/",
+          "headers": {
+            "Host": "sound.tebyan.net"
+          }
+        }
+      }
+    },
+    {
+      "tag": "vless-tls",
+      "port": 13555,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "<UUID>",
+            "level": 0
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "www.varzesh3.com",
+          "alpn": ["h2", "http/1.1"],
+          "certificates": [
+            {
+              "certificateFile": "/etc/v2ray/certificate.crt",
+              "keyFile": "/etc/v2ray/certificate.key"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "1.1.1.1",
+      "localhost"
+    ]
+  },
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blackhole"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "outboundTag": "blackhole",
+        "ip": [
+          "geoip:private"
+        ]
+      }
+    ]
+  }
+}
