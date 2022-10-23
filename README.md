@@ -35,6 +35,21 @@ This repository contains sample Docker Compose files to run V2Ray upstream and b
     * `<UPSTREAM-UUID>`: The generated UUID for the upstream server.
 1. Run `docker-compose up -d`. 
 
+#### Setup using install script
+
+Clone the repo and execute the insall script on both bridge and upstream server. Answer the questions asked by the script and it will take care of the rest.
+
+```bash
+git clone https://github.com/miladrahimi/v2ray-docker-compose;
+cd v2ray-docker-compose;
+chmod +x v2ray-install.sh;
+sudo ./v2ray-install.sh
+```
+Run the script again to uninstall the service.
+When the setup is over on the *Upstream* server, 3 QRCodes and URLs **(vmess://, vless://, ss://)** will be generated for clients. After added configs in the client app:
+* Those that end in **Bridged** should work all the time.
+* Those configs that end with **Direct**, connect directly to the upstream server (the speed is better but only works in "normal" times).
+
 #### Clients
 
 ##### Shadowsocks Protocol
