@@ -7,7 +7,7 @@ CONFIG_JSON="config/config.json"
 [ -f "$CONFIG_JSON" ] || { printf "Error: cannot find config/config.json."; exit 1; }
 
 # Getting the public IP address
-IP=$(curl -s curl ident.me)
+IP=$(curl -s ident.me)
 printf "Enter IP address (Leave empty to use '%s'): " "$IP"
 read -r INPUT_IP
 [ -n "$INPUT_IP" ] && IP="$INPUT_IP"
@@ -24,7 +24,6 @@ CLIENTS=$(echo "$VMESS_CONFIG" | jq -r .settings.clients[])
 for CLIENT in "$CLIENTS"; do
     UUID=$(echo "$CLIENT" | jq -r .id)
     ALERT_ID=$(echo "$CLIENT" | jq -r .alterId)
-    SECURITY=$(echo "$CLIENT" | jq -r .security)
     JSON="{\"add\": \"$IP\", \"aid\": \"$ALERT_ID\", \"host\": \"\", \"id\": \"$UUID\", \"net\": \"$STREAM_SETTINGS\", \
             \"path\": \"\", \"port\": \"$PORT\", \"ps\": \"$IP/$PORT\", \"tls\": \"\", \"type\": \"none\", \"v\": \"2\"}"
     printf "\n%s:\n%s%s\n" "VMESS Link" "vmess://" "$(echo "$JSON" | base64 -w 0)"
