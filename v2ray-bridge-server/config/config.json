@@ -82,11 +82,7 @@
     }
   ],
   "dns": {
-    "servers": [
-      "8.8.8.8",
-      "8.8.4.4",
-      "localhost"
-    ]
+    "servers": ["8.8.8.8", "8.8.4.4", "localhost"]
   },
   "routing": {
     "domainStrategy": "IPIfNonMatch",
@@ -95,9 +91,7 @@
         {
           "type": "field",
           "outboundTag": "freedom",
-          "domain": [
-            "regexp:.*\\.ir$"
-          ]
+          "domain": ["regexp:.*\\.ir$"]
         }
       ]
     }

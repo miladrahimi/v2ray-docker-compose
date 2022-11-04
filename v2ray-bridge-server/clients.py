@@ -10,7 +10,8 @@ path = Path(__file__).parent
 file = open(str(path.joinpath('config/config.json')), 'r', encoding='utf-8')
 config = json.load(file)
 
-html = open(str(path.joinpath('web/index.html')), 'r', encoding="utf-8").read()
+with open(str(path.joinpath('web/index.html')), 'r', encoding="utf-8") as f:
+    html = f.read()
 
 ip = urlopen("http://ifconfig.io/ip").read().decode().rstrip()
 
@@ -26,17 +27,24 @@ for inbound in config['inbounds']:
         security = base64.b64encode((method + ":" + password).encode('ascii')).decode('ascii')
         link = "ss://{}@{}:{}#{}:{}".format(security, ip, port, ip, port)
         print("\nShadowsocks:\n" + link)
-        html = re.sub(r'(ss://[^<]+)', link, html)
+        ss_link_tag = f'<textarea title="Access key" readonly>{link}</textarea>'
+        html = re.sub(r'(<div id="ss-link">)([\s\S]*?)(</div>)', f'\\1\n            {ss_link_tag}\n        \\3', html)
     if inbound['protocol'] == 'vmess':
         port = str(inbound['port'])
-        uuid = inbound['settings']['clients'][0]['id']
-        security = inbound['settings']['clients'][0]['security']
-        ps = "{}:{}".format(ip, port)
-        c = {"add": ip, "aid": "0", "host": "", "id": uuid, "net": "tcp", "path": "", "port": port, "ps": ps,
-             "tls": "none", "type": "none", "v": "2"}
-        j = json.dumps(c)
-        link = "vmess://" + base64.b64encode(j.encode('ascii')).decode('ascii')
-        print("\nVMESS:\n" + link)
-        html = re.sub(r'(vmess://[^<]+)', link, html)
+        for i, client in enumerate(inbound['settings']['clients'], 1):
+            uuid = client['id']
+            security = client['security']
+            aid = client.get('alterId', "0")
+            ps = "{}:{}".format(ip, port)
+            c = {"add": ip, "aid": aid, "host": "", "id": uuid, "net": "tcp", "path": "", "port": port, "ps": ps,
+                "tls": "none", "type": "none", "v": "2"}
+            j = json.dumps(c)
+            link = "vmess://" + base64.b64encode(j.encode('ascii')).decode('ascii')
+            vmess_links_position = re.search(r'<div id="vmess-links">[\s\S]*</div>', html).end() - 6
+            link_tag = f'    <textarea title="VMESS Link" readonly>{link}</textarea>\n        '
+            if link_tag.strip() not in html:
+                html = html[:vmess_links_position] + link_tag + html[vmess_links_position:]
+            print(f"\nVMESS Client{i}:\n{link}")
 
-open(str(path.joinpath('web/index.html')), 'w', encoding='utf-8').write(html)
+with open(str(path.joinpath('web/index.html')), 'w', encoding='utf-8') as f:
+    f.write(html)
