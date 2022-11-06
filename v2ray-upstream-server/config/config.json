@@ -14,7 +14,7 @@
           {
             "id": "<UPSTREAM-UUID>",
             "alterId": 0,
-            "security": "none"
+            "security": "aes-128-gcm"
           }
         ]
       },
