@@ -6,7 +6,7 @@
   },
   "inbounds": [
     {
-      "listen": "0.0.0.0",
+      "listen": "127.0.0.1", // Only listen to local host 127.0.0.1, avioding other external inspection to 10000 port 
       "port": 1310,
       "protocol": "vmess",
       "settings": {
