@@ -37,7 +37,7 @@ Step 1: Setup Upstream Server
 
 1. Install Docker and Docker-compose.
 1. Copy the `v2ray-upstream-server` directory into the upstream server.
-1. Run ```./bbr.sh``` to speed up server network.
+1. Run ```./utils/bbr.sh``` to speed up server network.
 1. Run ```cat /proc/sys/kernel/random/uuid``` in your terminal to generate a UUID.
 1. Replace `<UPSTREAM-UUID>` in `v2ray/config/config.json` with the generated UUID.
 1. Run `docker-compose up -d`.
@@ -46,7 +46,7 @@ Step 2: Setup Bridge Server
 
 1. Install Docker and Docker-compose.
 1. Copy the `v2ray-bridge-server` directory into the bridge server.
-1. Run ```./bbr.sh``` to speed up server network.
+1. Run ```./utils/bbr.sh``` to speed up server network.
 1. Replace the following variables in `v2ray/config/config.json` with appropriate values.
     * `<SHADOWSOCKS-PASSWORD>`: A password for Shadowsocks users like `FR33DoM`.
     * `<BRIDGE-UUID>`: A new UUID for bridge server (Run ```cat /proc/sys/kernel/random/uuid```).
