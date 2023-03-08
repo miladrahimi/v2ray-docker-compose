@@ -6,10 +6,10 @@ import json
 from pathlib import Path
 import urllib.request
 
-def config_generator(domain, uuid, operatorName="", ip=""):
+def config_generator(domain, uuid, ip=""):
     if ip == "":
         ip = domain
-    name = domain + " " + operatorName        
+    name = domain
     j = json.dumps({
         "v": "2", "ps": name, "add": ip, "port": "443", "id": uuid,
         "aid": "0", "net": "ws", "type": "none", "sni": domain,
@@ -30,9 +30,8 @@ isUsingCloudFlareCDNProxy = 'no'
 
 isUsingCloudFlareCDNProxy = input("Are you using CloudFlare CDN Proxy? type 'yes' or 'no'. Default is no.\n")
 if isUsingCloudFlareCDNProxy == 'yes':
-    print("\nGet latest data from http://bot.sudoer.net/best.cf.iran ...\n")
     enhancedIPList = []
-    for line in urllib.request.urlopen("http://bot.sudoer.net/best.cf.iran"):
-        print(line.split()[0].decode("utf-8")  + " ISP. " + "Config for copy/paste:\n" + config_generator(domain, uuid, line.split()[0].decode("utf-8"), line.split()[1].decode("utf-8")) + "\n" )
+    for line in open(str(path.joinpath('cloudflare_ip_list.txt')), 'r'):
+        print(config_generator(domain, uuid, line + "\n"))
 else:
     print(config_generator(domain, uuid))
