@@ -1,0 +1,49 @@
+{
+  "log": {
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [{
+    "tag": "inbound-1310",
+    "listen": "0.0.0.0",
+    "port": 1310,
+    "protocol": "vless",
+    "settings": {
+      "clients": [{
+        "id": "<UPSTREAM-UUID>",
+        "flow": "xtls-rprx-vision"
+      }],
+      "decryption": "none"
+    },
+    "streamSettings": {
+      "network": "tcp",
+      "security": "reality",
+      "realitySettings": {
+        "show": false,
+        "dest": "github.io:443",
+        "xver": 0,
+        "serverNames": [
+          "github.io",
+          "www.github.io"
+        ],
+        "privateKey": "4NOBxDrEsOhNI3Y3EnVIy_TN-uyBoAjQw6QM0YsOi0s",
+        "maxTimeDiff": 0,
+        "shortIds": [
+          "<UPSTREAM-SHORTID>"
+        ]
+      }
+    }
+  }],
+  "outbounds": [{
+    "protocol": "freedom",
+    "tag": "freedom"
+  }],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "localhost"
+    ]
+  }
+}

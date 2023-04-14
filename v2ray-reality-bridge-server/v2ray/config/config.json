@@ -1,0 +1,88 @@
+{
+  "log": {
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [{
+    "tag": "inbound-1310",
+    "listen": "0.0.0.0",
+    "port": 1310,
+    "protocol": "vless",
+    "settings": {
+      "clients": [{
+        "id": "<BRIDGE-UUID>",
+        "flow": "xtls-rprx-vision"
+      }],
+      "decryption": "none"
+    },
+    "streamSettings": {
+      "network": "tcp",
+      "security": "reality",
+      "realitySettings": {
+        "show": false,
+        "dest": "github.io:443",
+        "xver": 0,
+        "serverNames": [
+          "github.io",
+          "www.github.io"
+        ],
+        "privateKey": "4NOBxDrEsOhNI3Y3EnVIy_TN-uyBoAjQw6QM0YsOi0s",
+        "maxTimeDiff": 0,
+        "shortIds": [
+          "<BRIDGE-SHORTID>"
+        ]
+      }
+    }
+  }],
+  "outbounds": [{
+      "protocol": "vless",
+      "settings": {
+        "vnext": [{
+          "address": "<UPSTREAM-IP>",
+          "port": 1310,
+          "users": [{
+            "id": "<UPSTREAM-UUID>",
+            "flow": "xtls-rprx-vision",
+            "encryption": "none"
+          }]
+        }]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "fingerprint": "chrome",
+          "serverName": "github.io",
+          "publicKey": "CbcY9qc4YuMDJDyyL0OITlU824TBg1O84ClPy27e2RM",
+          "shortId": "<UPSTREAM-SHORTID>",
+          "spiderX": ""
+        }
+      }
+    },
+    {
+      "protocol": "freedom",
+      "tag": "freedom"
+    }
+  ],
+  "dns": {
+    "servers": [
+      "8.8.8.8",
+      "8.8.4.4",
+      "localhost"
+    ]
+  },
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "settings": {
+      "rules": [{
+        "type": "field",
+        "outboundTag": "freedom",
+        "domain": [
+          "regexp:.*\\.ir$"
+        ]
+      }]
+    }
+  }
+}

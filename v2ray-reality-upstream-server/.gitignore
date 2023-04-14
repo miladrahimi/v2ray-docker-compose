@@ -1,0 +1,4 @@
+.env
+.docker
+.config.json
+logs
