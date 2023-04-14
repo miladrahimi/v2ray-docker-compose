@@ -37,7 +37,7 @@ upstreamUUID = input(message)
 if upstreamUUID != '':
     config['outbounds'][0]['settings']['vnext'][0]['users'][0]['id'] = upstreamUUID
 
-# INPUT: <BRIDGE-SHORTID>
+# INPUT: UPSTREAM-SHORTID
 
 defaultUpstreamShortID = config['outbounds'][0]['streamSettings']['realitySettings']['shortIds'][0]
 if defaultUpstreamShortID == '<UPSTREAM-SHORTID>':
@@ -47,7 +47,7 @@ else:
 
 UpstreamShortID = input(message)
 if UpstreamShortID != '':
-    config['inbounds'][0]['streamSettings']['realitySettings']['shortIds'][0] = BridgeShortID
+    config['outbounds'][0]['streamSettings']['realitySettings']['shortIds'][0] = UpstreamShortID
 
 
 # CONFIGURE INBOUNDS

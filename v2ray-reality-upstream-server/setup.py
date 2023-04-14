@@ -27,6 +27,22 @@ if upstreamUUID == '':
 
 config['inbounds'][0]['settings']['clients'][0]['id'] = upstreamUUID
 
+# INPUT: UPSTREAM-SHORTID
+
+defaultUpstreamShortID = config['inbounds'][0]['streamSettings']['realitySettings']['shortIds'][0]
+if defaultUpstreamShortID == '<UPSTREAM-SHORTID>':
+    message = "Upstream ShortId:\n"
+else:
+    message = f"Upstream ShortId: (Leave empty to use `{defaultUpstreamShortID}`)\n"
+
+UpstreamShortID = input(message)
+if UpstreamShortID != '':
+    config['inbounds'][0]['streamSettings']['realitySettings']['shortIds'][0] = UpstreamShortID
+
+
+
+
+
 # SAVE CONFIG FILE
 
 content = json.dumps(config, indent=2)
